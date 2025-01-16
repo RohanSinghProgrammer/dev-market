@@ -10,10 +10,6 @@ import { cn } from "@/lib/utils";
 
 const routes = [
   {
-    href: "/",
-    label: "Home",
-  },
-  {
     href: "/products",
     label: "Products",
   },
