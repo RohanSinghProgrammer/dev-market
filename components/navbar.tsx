@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Menu, X, Code2 } from "lucide-react";
 import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useCart } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -72,6 +73,15 @@ export function Navbar() {
                     {cart.length}
                   </span>
                 )}
+              </Button>
+            </Link>
+            <Link href="/user-profile">
+              <Button variant="ghost" size="icon" className="relative">
+                <Avatar className="size-7">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+
               </Button>
             </Link>
             <div className="hidden md:flex md:space-x-2">
