@@ -4,9 +4,9 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import Orders from "./_components/Orders";
+import Orders from "./_components/orders";
 import UserProfile from "./_components/user-profile";
-import Payments from "./_components/Payments";
+import Payments from "./_components/payments";
 
 export default function AccountPage() {
   return (

@@ -1,5 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Edit } from 'lucide-react'
+import EditUserDialog from './EditUserDialog'
 
 const UserProfile = () => {
     return (
@@ -29,7 +31,7 @@ const UserProfile = () => {
                                 <p className="mt-1">123 Main St, City, Country</p>
                             </div>
                         </div>
-                        <Button>Edit Profile</Button>
+                        <EditUserDialog />
                     </div>
                 </CardContent>
             </Card>

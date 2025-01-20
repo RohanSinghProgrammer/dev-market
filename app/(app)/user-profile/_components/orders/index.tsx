@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Package } from 'lucide-react'
+import OrderDetailsDialog from './OrderDetailsDialog'
 
 const Orders = () => {
     return (
@@ -24,7 +25,7 @@ const Orders = () => {
                                     </p>
                                 </div>
                             </div>
-                            <Button variant="outline">View Details</Button>
+                            <OrderDetailsDialog />
                         </div>
                     </div>
                 </CardContent>

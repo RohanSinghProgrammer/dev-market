@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search, Code2, Database, Bot, Terminal } from "lucide-react";
+import Link from "next/link";
 
 interface Product {
   id: string;
@@ -127,30 +128,31 @@ export default function ProductsPage() {
       {/* Products Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {filteredProducts.map((product) => (
-          <Card key={product.id} className="overflow-hidden">
-            <div
-              className="aspect-video w-full bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${product.image})` }}
-            />
-            <div className="p-4">
-              <div className="mb-2 flex items-center gap-2">
-                {getCategoryIcon(product.category)}
-                <span className="text-sm text-muted-foreground">
-                  {product.category}
-                </span>
+          <Link key={product.id} href={`/products/${product.id}`}>
+            <Card className="overflow-hidden">
+              <div
+                className="aspect-video w-full bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: `url(${product.image})` }}
+              />
+              <div className="p-4">
+                <div className="mb-2 flex items-center gap-2">
+                  {getCategoryIcon(product.category)}
+                  <span className="text-sm text-muted-foreground">
+                    {product.category}
+                  </span>
+                </div>
+                <h3 className="mb-2 font-semibold">{product.name}</h3>
+                <p className="mb-4 text-sm text-muted-foreground">
+                  {product.description}
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold">
+                    ${product.price.toFixed(2)}
+                  </span>
+                </div>
               </div>
-              <h3 className="mb-2 font-semibold">{product.name}</h3>
-              <p className="mb-4 text-sm text-muted-foreground">
-                {product.description}
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-lg font-bold">
-                  ${product.price.toFixed(2)}
-                </span>
-                <Button>Add to Cart</Button>
-              </div>
-            </div>
-          </Card>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>

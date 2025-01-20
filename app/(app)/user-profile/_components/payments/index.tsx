@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { CreditCard } from 'lucide-react'
+import AddPaymentMethodDialog from './AddPaymentMethodDialog'
 
 const Payments = () => {
   return (
@@ -24,7 +25,7 @@ const Payments = () => {
           </div>
           <Button variant="outline">Remove</Button>
         </div>
-        <Button>Add Payment Method</Button>
+        <AddPaymentMethodDialog />
       </div>
     </CardContent>
   </Card>
