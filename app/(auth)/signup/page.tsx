@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Code2 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="container mx-auto flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center">
+    <div className="container mx-auto flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-8">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <Code2 className="mx-auto h-6 w-6" />
@@ -69,6 +70,37 @@ export default function SignUpPage() {
             />
           </div>
           <div className="space-y-2">
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input
+              id="phone"
+              placeholder="123-456-7890"
+              type="tel"
+              disabled={isLoading}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="profileImage">Profile Image</Label>
+            <Input
+              id="profileImage"
+              type="file"
+              disabled={isLoading}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="role">Role</Label>
+            <Select disabled={isLoading} defaultValue="customer">
+              <SelectTrigger>
+                <SelectValue placeholder="Select role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="sellor">Sellor</SelectItem>
+                <SelectItem value="customer">Customer</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
@@ -95,3 +127,4 @@ export default function SignUpPage() {
     </div>
   );
 }
+
