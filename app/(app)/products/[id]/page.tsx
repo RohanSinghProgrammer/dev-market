@@ -22,7 +22,14 @@ import Documentation from './_components/Documentation';
 import Source from './_components/Source';
 import Support from './_components/Support';
 
-const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
+interface PageProps {
+    params: {
+        id: string;
+    };
+}
+
+
+const ProductDetailsPage = ({ params }: PageProps | any) => {
     const product = {
         name: "AI Image Recognition API",
         description: "Advanced machine learning model for real-time image recognition with 98% accuracy. Built with TensorFlow and optimized for edge devices.",
