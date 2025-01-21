@@ -54,12 +54,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-muted-foreground hover:text-foreground">
+                <Link href="/privacy-policy" className="text-muted-foreground hover:text-foreground">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-muted-foreground hover:text-foreground">
+                <Link href="/terms-of-service" className="text-muted-foreground hover:text-foreground">
                   Terms of Service
                 </Link>
               </li>
@@ -69,7 +69,7 @@ export function Footer() {
             <h3 className="font-semibold">Support</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <Link href="/help" className="text-muted-foreground hover:text-foreground">
+                <Link href="/help-center" className="text-muted-foreground hover:text-foreground">
                   Help Center
                 </Link>
               </li>
