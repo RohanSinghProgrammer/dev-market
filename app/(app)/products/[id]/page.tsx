@@ -121,7 +121,7 @@ const ProductDetailsPage = ({ params }: PageProps | any) => {
             {/* Content Section */}
             <div className="container mx-auto px-4 py-8">
                 <Tabs defaultValue="overview" className="space-y-6">
-                    <TabsList>
+                    <TabsList className="flex overflow-x-auto no-scrollbar md:flex-wrap md:overflow-x-visible md:w-fit">
                         <TabsTrigger value="overview">Overview</TabsTrigger>
                         <TabsTrigger value="documentation">Documentation</TabsTrigger>
                         <TabsTrigger value="source">Source Code</TabsTrigger>

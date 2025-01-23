@@ -36,7 +36,7 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
         </Link>
       </div>
 
-      <div className="flex h-screen overflow-y-hidden">
+      <div className="flex lg:h-screen overflow-y-hidden">
         {/* Desktop Sidebar */}
         <aside className="hidden lg:flex flex-col w-64 p-4 border-r h-screen">
           <div className='flex items-center space-x-4 mb-8'>

@@ -33,7 +33,7 @@ const AddProduct = () => {
                 {...getRootProps()}
                 className={`border-2 border-dashed rounded-lg p-4 text-center ${isDragActive ? 'border-blue-500' : 'border-gray-300'}`}
             >
-                <input {...getInputProps()} />
+                <input {...getInputProps()} className='hidden' />
                 <Upload className="mx-auto h-8 w-8 mb-2" />
                 <p className="text-sm">
                     {isDragActive
@@ -60,7 +60,7 @@ const AddProduct = () => {
                 {...getRootProps()}
                 className={`border-2 border-dashed rounded-lg p-4 text-center ${isDragActive ? 'border-blue-500' : 'border-gray-300'}`}
             >
-                <input {...getInputProps()} />
+                <input {...getInputProps()} className='hidden' />
                 <FileText className="mx-auto h-8 w-8 mb-2" />
                 <p className="text-sm">
                     {isDragActive
@@ -87,7 +87,7 @@ const AddProduct = () => {
                 {...getRootProps()}
                 className={`border-2 border-dashed rounded-lg p-4 text-center ${isDragActive ? 'border-blue-500' : 'border-gray-300'}`}
             >
-                <input {...getInputProps()} />
+                <input {...getInputProps()} className='hidden' />
                 <Upload className="mx-auto h-8 w-8 mb-2" />
                 <p className="text-sm">
                     {isDragActive
@@ -147,7 +147,6 @@ const AddProduct = () => {
                         <Textarea placeholder="Enter included resources (comma separated)" />
                     </div>
 
-
                     <div>
                         <label className="block text-sm font-medium mb-1">Documentation (README.md)</label>
                         <DocumentationDropzone />
@@ -157,7 +156,6 @@ const AddProduct = () => {
                         <label className="block text-sm font-medium mb-1">Source Code</label>
                         <SourceCodeDropzone />
                     </div>
-
 
                     <div>
                         <label className="block text-sm font-medium mb-1">Live Demo Link</label>
