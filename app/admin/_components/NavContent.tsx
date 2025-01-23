@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from '@/components/ui/button';
-import { BarChart3, LogOut, Package, Plus } from 'lucide-react';
+import { BarChart3, ChartCandlestick, LogOut, Package, Plus } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react'
 
@@ -43,6 +43,14 @@ const NavContent = ({ closeDrawer }: { closeDrawer: () => void }) => {
                 >
                     <Plus className="mr-2 h-4 w-4" />
                     Add Product
+                </Button>
+                <Button
+                    variant={activeTab === '/admin/stock-predictor' ? 'default' : 'ghost'}
+                    className="justify-start"
+                    onClick={() => handleRedirect('stock-predictor')}
+                >
+                    <ChartCandlestick className="mr-2 h-4 w-4" />
+                    Stock Predictor
                 </Button>
             </div>
             <Button
