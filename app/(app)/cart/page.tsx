@@ -58,8 +58,8 @@ export default function CartPage() {
         {/* Cart Items */}
         <div className="lg:col-span-2">
           <div className="space-y-4">
-            {items.map((item) => (
-              <Card key={item.id} className="p-4">
+            {items.map((item, index) => (
+              <Card key={index} className="p-4">
                 <div className="flex items-start gap-4">
                   <div className="flex-1">
                     <h3 className="font-semibold">{item.name}</h3>
@@ -120,10 +120,12 @@ export default function CartPage() {
                   <span>${(total * 1.1).toFixed(2)}</span>
                 </div>
               </div>
-              <Button className="w-full" size="lg">
-                Proceed to Checkout
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+              <Link href={"/checkout"}>
+                <Button className="w-full" size="lg">
+                  Proceed to Checkout
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
             </div>
           </Card>
         </div>

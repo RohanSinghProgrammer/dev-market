@@ -1,26 +1,18 @@
 import React from 'react';
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-    Github,
-    Globe,
     Calendar,
     Users,
     Star,
-    MessageSquare,
-    Share2,
-    Download,
-    Code2
 } from "lucide-react";
 import { fetchProducts } from '../actions/product.actions';
 import Overview from './_components/Overview';
 import Documentation from './_components/Documentation';
 import Source from './_components/Source';
 import Support from './_components/Support';
+import Purchase from './_components/Purchase';
 
 interface PageProps {
     params: {
@@ -98,22 +90,7 @@ const ProductDetailsPage = ({ params }: PageProps | any) => {
                             </div>
                         </div>
 
-                        <Card className="w-full md:w-80 shrink-0 bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700">
-                            <CardContent className="p-6">
-                                <div className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">${product.price}</div>
-                                <div className="space-y-4">
-                                    <Button className="w-full bg-blue-500 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-700 text-white" size="lg">
-                                        Purchase Now
-                                    </Button>
-                                    <Button variant="outline" className="w-full border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100" size="lg">
-                                        Add To Cart
-                                    </Button>
-                                    <Button variant="outline" className="w-full border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100" size="lg">
-                                        Live Demo
-                                    </Button>
-                                </div>
-                            </CardContent>
-                        </Card>
+                        <Purchase product={product} params={params} />
                     </div>
                 </div>
             </div>
