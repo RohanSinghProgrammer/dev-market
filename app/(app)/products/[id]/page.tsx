@@ -55,21 +55,21 @@ const ProductDetailsPage = ({ params }: PageProps | any) => {
         ]
     };
     return (
-        <div className="min-h-screen bg-gray-900 text-gray-200">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
             {/* Hero Section */}
-            <div className="bg-gray-800 border-b border-gray-700">
+            <div className="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
                 <div className="container mx-auto px-4 py-8">
                     <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                         <div className="flex-1">
                             <div className="flex items-center gap-2 mb-4">
                                 {product.tags.map((tag) => (
-                                    <Badge key={tag} variant="secondary" className="text-sm bg-gray-700 text-gray-200">
+                                    <Badge key={tag} variant="secondary" className="text-sm bg-gray-300 dark:bg-gray-700 text-gray-900 dark:text-gray-200">
                                         {tag}
                                     </Badge>
                                 ))}
                             </div>
-                            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-100">{product.name}</h1>
-                            <p className="text-gray-400 mb-6">{product.description}</p>
+                            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">{product.name}</h1>
+                            <p className="text-gray-700 dark:text-gray-400 mb-6">{product.description}</p>
 
                             <div className="flex items-center gap-4 mb-6">
                                 <Avatar>
@@ -77,12 +77,12 @@ const ProductDetailsPage = ({ params }: PageProps | any) => {
                                     <AvatarFallback>{product.author.name[0]}</AvatarFallback>
                                 </Avatar>
                                 <div>
-                                    <p className="font-medium text-gray-100">{product.author.name}</p>
-                                    <p className="text-sm text-gray-500">@{product.author.username}</p>
+                                    <p className="font-medium text-gray-900 dark:text-gray-100">{product.author.name}</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-500">@{product.author.username}</p>
                                 </div>
                             </div>
 
-                            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500">
+                            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600 dark:text-gray-500">
                                 <div className="flex items-center gap-1">
                                     <Calendar className="w-4 h-4" />
                                     <span>Updated {product.lastUpdated}</span>
@@ -98,17 +98,17 @@ const ProductDetailsPage = ({ params }: PageProps | any) => {
                             </div>
                         </div>
 
-                        <Card className="w-full md:w-80 shrink-0 bg-gray-800 border border-gray-700">
+                        <Card className="w-full md:w-80 shrink-0 bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700">
                             <CardContent className="p-6">
-                                <div className="text-3xl font-bold mb-6 text-gray-100">${product.price}</div>
+                                <div className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">${product.price}</div>
                                 <div className="space-y-4">
-                                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" size="lg">
+                                    <Button className="w-full bg-blue-500 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-700 text-white" size="lg">
                                         Purchase Now
                                     </Button>
-                                    <Button variant="outline" className="w-full border-gray-700 text-gray-100" size="lg">
+                                    <Button variant="outline" className="w-full border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100" size="lg">
                                         Add To Cart
                                     </Button>
-                                    <Button variant="outline" className="w-full border-gray-700 text-gray-100" size="lg">
+                                    <Button variant="outline" className="w-full border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100" size="lg">
                                         Live Demo
                                     </Button>
                                 </div>

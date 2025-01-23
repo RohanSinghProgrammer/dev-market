@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useCart } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import ToggleTheme from "./toggle-theme";
 
 const routes = [
   {
@@ -84,6 +85,7 @@ export function Navbar() {
 
               </Button>
             </Link>
+            <ToggleTheme />
             <div className="hidden md:flex md:space-x-2">
               <Link href="/login">
                 <Button variant="ghost">Login</Button>
