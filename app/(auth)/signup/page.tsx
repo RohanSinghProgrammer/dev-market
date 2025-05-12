@@ -1,62 +1,40 @@
-"use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
 import { Code2 } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import SubmitBtn from "./_components/SubmitBtn";
+import { onSignup } from "../_utils/Actions";
 
 export default function SignUpPage() {
-  const router = useRouter();
-  const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      // TODO: Implement actual signup logic
-      toast({
-        title: "Account created successfully",
-        description: "Please check your email to verify your account.",
-      });
-      router.push("/login");
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div className="container mx-auto flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-8">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <Code2 className="mx-auto h-6 w-6" />
-          <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Create an account
+          </h1>
           <p className="text-sm text-muted-foreground">
             Enter your details below to create your account
           </p>
         </div>
 
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form action={onSignup} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
               placeholder="John Doe"
               type="text"
-              disabled={isLoading}
               required
+              name="name"
             />
           </div>
           <div className="space-y-2">
@@ -65,8 +43,8 @@ export default function SignUpPage() {
               id="email"
               placeholder="name@example.com"
               type="email"
-              disabled={isLoading}
               required
+              name="email"
             />
           </div>
           <div className="space-y-2">
@@ -75,8 +53,11 @@ export default function SignUpPage() {
               id="phone"
               placeholder="123-456-7890"
               type="tel"
-              disabled={isLoading}
               required
+              maxLength={10}
+              minLength={10}
+              name="phone"
+              pattern="\d{10}"
             />
           </div>
           <div className="space-y-2">
@@ -84,18 +65,19 @@ export default function SignUpPage() {
             <Input
               id="profileImage"
               type="file"
-              disabled={isLoading}
               required
+              name="profileImage"
+              accept="image/*"
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="role">Role</Label>
-            <Select disabled={isLoading} defaultValue="customer">
+            <Select defaultValue="customer" name="role">
               <SelectTrigger>
                 <SelectValue placeholder="Select role" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="sellor">Sellor</SelectItem>
+                <SelectItem value="seller">Seller</SelectItem>
                 <SelectItem value="customer">Customer</SelectItem>
               </SelectContent>
             </Select>
@@ -105,13 +87,12 @@ export default function SignUpPage() {
             <Input
               id="password"
               type="password"
-              disabled={isLoading}
               required
+              name="password"
+              minLength={8}
             />
           </div>
-          <Button className="w-full" type="submit" disabled={isLoading}>
-            {isLoading ? "Creating account..." : "Sign Up"}
-          </Button>
+          <SubmitBtn />
         </form>
 
         <p className="px-8 text-center text-sm text-muted-foreground">
@@ -127,4 +108,3 @@ export default function SignUpPage() {
     </div>
   );
 }
-
