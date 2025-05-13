@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { handleSignup } from "./actions";
+import SubmitButton from "@/components/submit-btn";
 
 export default function SignUpPage() {
   return (
@@ -95,9 +96,7 @@ export default function SignUpPage() {
               title="Must contain at least 8 characters, including one letter and one number"
             />
           </div>
-          <Button className="w-full" type="submit">
-            Sign Up
-          </Button>
+          <SubmitButton text="Sign Up" loadingText="Creating your account" />
         </form>
 
         <p className="px-8 text-center text-sm text-muted-foreground">
