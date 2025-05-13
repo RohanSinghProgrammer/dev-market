@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGO_URI: string = process.env.MONGO_URI || "";
+const MONGO_URI: string = process.env.MONGO_URI || "mongodb+srv://admin:admin@cluster0.uappo.mongodb.net/dev-market";
 
 declare global {
   var mongoose: {

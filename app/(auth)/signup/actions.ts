@@ -1,10 +1,14 @@
 "use server";
 
 import { uploadFile } from "@/actions/uploadFile";
+import { connectToDB } from "@/db/connect";
+import { User } from "@/models/user.model";
 
 export const handleSignup = async (formData: FormData) => {
   const { profileImg, ...rest } = Object.fromEntries(formData.entries());
-  console.log(profileImg, rest);
   const profileImgUrl = await uploadFile(profileImg as File);
-  console.log(profileImgUrl);
+  await connectToDB();
+  const newUser = new User({ ...rest, profileImg: profileImgUrl?.publicUrl });
+  await newUser.save();
+  // return { success: true, message: "User added successfully!" };
 };
