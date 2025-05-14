@@ -27,12 +27,13 @@ export default function LoginPage() {
       });
     }
     if (user) {
-      localStorage.setItem("user", user);
       user = JSON.parse(user);
+      const { password, ...rest } = user;
+      localStorage.setItem("user", JSON.stringify(rest));
       if (user.role === "seller") {
-        router.push("/admin/dashboard");
+        router.replace("/admin/dashboard");
       } else {
-        router.push("/products");
+        router.replace("/products");
       }
     }
   };

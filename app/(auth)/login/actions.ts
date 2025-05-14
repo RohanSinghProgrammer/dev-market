@@ -1,5 +1,6 @@
 "use server";
 
+import { hashPassword } from "@/actions/hashPassword";
 import { User } from "@/models/user.model";
 
 export const handleSignin = async (formData: FormData) => {
@@ -17,7 +18,7 @@ export const handleSignin = async (formData: FormData) => {
       };
     }
     // * If user exists but password is incorrect
-    if (user.password !== password) {
+    if (user.password !== hashPassword(password.toString())) {
       return {
         success: false,
         title: "Incorrect password",
@@ -27,8 +28,8 @@ export const handleSignin = async (formData: FormData) => {
     // * If user exists and password is correct
     return {
       success: true,
-      user : JSON.stringify(user),
-      };
+      user: JSON.stringify(user),
+    };
   } catch (err: any) {
     return {
       success: false,
