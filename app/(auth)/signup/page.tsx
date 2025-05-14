@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link"
+import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Code2 } from "lucide-react";
@@ -23,13 +23,13 @@ export default function SignUpPage() {
     const {
       title = "Something Went Wrong!",
       description = "Please contact developer to fix this issue",
-      redirect
+      redirect,
     }: any = await handleSignup(formData);
     toast({
       title,
       description,
     });
-    if (redirect){
+    if (redirect) {
       router.push(redirect);
     }
   };

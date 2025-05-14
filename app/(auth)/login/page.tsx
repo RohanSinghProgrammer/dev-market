@@ -6,8 +6,36 @@ import { Label } from "@/components/ui/label";
 import { Code2 } from "lucide-react";
 import SubmitButton from "@/components/submit-btn";
 import { handleSignin } from "./actions";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const { toast } = useToast();
+  const router = useRouter();
+  const handleServerAction = async (formData: FormData) => {
+    let {
+      title = "Something Went Wrong!",
+      description = "Please contact developer to fix this issue",
+      user,
+      success,
+    }: any = await handleSignin(formData);
+
+    if (!success) {
+      toast({
+        title,
+        description,
+      });
+    }
+    if (user) {
+      localStorage.setItem("user", user);
+      user = JSON.parse(user);
+      if (user.role === "seller") {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/products");
+      }
+    }
+  };
   return (
     <div className="container mx-auto flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
@@ -21,7 +49,7 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form action={handleSignin} className="space-y-4">
+        <form action={handleServerAction} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
