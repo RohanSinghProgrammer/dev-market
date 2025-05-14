@@ -12,14 +12,32 @@ export default function ForgotPasswordPage() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [email, setEmail] = useState("");
+  const domain = typeof window !== "undefined" ? window.location.origin : "";
+  const user =
+    typeof window !== "undefined"
+      ? JSON.parse(window.localStorage.getItem("user") as string)
+      : null;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      // TODO: Implement actual password reset logic
       setEmailSent(true);
+      // TODO: Implement actual password reset logic
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: email,
+          subject: "DevMarket - Reset Password",
+          text: `Clink on this link to reset your password ${domain}/set-new-password?email=${user.email}`,
+        }),
+      });
+
+      await res.json();
+      setIsLoading(false);
       toast({
         title: "Reset email sent",
         description: "Check your email for password reset instructions.",
@@ -30,7 +48,6 @@ export default function ForgotPasswordPage() {
         description: "Something went wrong. Please try again.",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
     }
   };
@@ -40,42 +57,32 @@ export default function ForgotPasswordPage() {
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <Code2 className="mx-auto h-6 w-6" />
-          <h1 className="text-2xl font-semibold tracking-tight">Reset password</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Reset password
+          </h1>
           <p className="text-sm text-muted-foreground">
-            Enter your email address and we&apos;ll send you a link to reset your password
+            Enter your email address and we&apos;ll send you a link to reset
+            your password
           </p>
         </div>
-
-        {!emailSent ? (
-          <form onSubmit={onSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                placeholder="name@example.com"
-                type="email"
-                disabled={isLoading}
-                required
-              />
-            </div>
-            <Button className="w-full" type="submit" disabled={isLoading}>
-              {isLoading ? "Sending..." : "Send Reset Link"}
-            </Button>
-          </form>
-        ) : (
-          <div className="space-y-4">
-            <p className="text-center text-sm text-muted-foreground">
-              Check your email for password reset instructions.
-            </p>
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={() => setEmailSent(false)}
-            >
-              Try another email
-            </Button>
+        <form onSubmit={onSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              placeholder="name@example.com"
+              type="email"
+              disabled={isLoading}
+              required
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
-        )}
+          <Button className="w-full" type="submit" disabled={isLoading}>
+            {isLoading ? "Sending..." : "Send Reset Link"}
+          </Button>
+        </form>
 
         <p className="px-8 text-center text-sm text-muted-foreground">
           Remember your password?{" "}
