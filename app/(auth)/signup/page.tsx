@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import Link from "next/link"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Code2 } from "lucide-react";
@@ -14,8 +13,26 @@ import {
 } from "@/components/ui/select";
 import { handleSignup } from "./actions";
 import SubmitButton from "@/components/submit-btn";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+  const { toast } = useToast();
+  const router = useRouter();
+  const handleServerAction = async (formData: FormData) => {
+    const {
+      title = "Something Went Wrong!",
+      description = "Please contact developer to fix this issue",
+      redirect
+    }: any = await handleSignup(formData);
+    toast({
+      title,
+      description,
+    });
+    if (redirect){
+      router.push(redirect);
+    }
+  };
   return (
     <div className="container mx-auto flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-8">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
@@ -29,7 +46,7 @@ export default function SignUpPage() {
           </p>
         </div>
 
-        <form action={handleSignup} className="space-y-4">
+        <form action={handleServerAction} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
