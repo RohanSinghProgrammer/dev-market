@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Menu, X, Code2 } from "lucide-react";
 import { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useCart } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import ToggleTheme from "./toggle-theme";
@@ -31,10 +31,16 @@ const routes = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const cart = useCart((state) => state.items);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    router.replace("/login");
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -82,27 +88,21 @@ export function Navbar() {
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-
               </Button>
             </Link>
             <ToggleTheme />
-            <div className="hidden md:flex md:space-x-2">
-              <Link href="/login">
-                <Button variant="ghost">Login</Button>
-              </Link>
-              <Link href="/signup">
-                <Button>Sign Up</Button>
-              </Link>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={toggleMenu}
-            >
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <Button onClick={handleLogout} variant="outline">
+              Logout
             </Button>
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={toggleMenu}
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
         </div>
 
         {/* Mobile Navigation */}
