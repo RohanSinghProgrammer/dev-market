@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Search, Code2, Database, Bot, Terminal } from "lucide-react";
 import Link from "next/link";
+import ProductCard from "@/components/product-card";
 
 interface Product {
   id: string;
@@ -27,18 +28,22 @@ const products: Product[] = [
   {
     id: "1",
     name: "REST API Boilerplate",
-    description: "Production-ready REST API with authentication and rate limiting",
+    description:
+      "Production-ready REST API with authentication and rate limiting",
     price: 49.99,
     category: "Web APIs",
-    image: "https://images.unsplash.com/photo-1555952517-2e8e729e0b44?auto=format&fit=crop&q=80&w=400&h=300",
+    image:
+      "https://images.unsplash.com/photo-1555952517-2e8e729e0b44?auto=format&fit=crop&q=80&w=400&h=300",
   },
   {
     id: "2",
     name: "Image Recognition Model",
-    description: "Pre-trained ML model for image classification and object detection",
+    description:
+      "Pre-trained ML model for image classification and object detection",
     price: 99.99,
     category: "ML/AI Models",
-    image: "https://images.unsplash.com/photo-1501159599894-155982264a55?auto=format&fit=crop&q=80&w=400&h=300",
+    image:
+      "https://images.unsplash.com/photo-1501159599894-155982264a55?auto=format&fit=crop&q=80&w=400&h=300",
   },
   {
     id: "3",
@@ -46,7 +51,8 @@ const products: Product[] = [
     description: "Automated web scraping tools with proxy rotation",
     price: 79.99,
     category: "Automation",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400&h=300",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400&h=300",
   },
   {
     id: "4",
@@ -54,7 +60,8 @@ const products: Product[] = [
     description: "Complete e-commerce solution with payment integration",
     price: 149.99,
     category: "Applications",
-    image: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=400&h=300",
+    image:
+      "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=400&h=300",
   },
 ];
 
@@ -80,21 +87,6 @@ export default function ProductsPage() {
     return matchesSearch && matchesCategory;
   });
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case "Web APIs":
-        return <Code2 className="h-5 w-5" />;
-      case "ML/AI Models":
-        return <Bot className="h-5 w-5" />;
-      case "Automation":
-        return <Terminal className="h-5 w-5" />;
-      case "Applications":
-        return <Database className="h-5 w-5" />;
-      default:
-        return <Code2 className="h-5 w-5" />;
-    }
-  };
-
   return (
     <div className="container mx-auto py-8">
       {/* Search and Filter */}
@@ -108,10 +100,7 @@ export default function ProductsPage() {
             className="pl-9"
           />
         </div>
-        <Select
-          value={selectedCategory}
-          onValueChange={setSelectedCategory}
-        >
+        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
           <SelectTrigger className="w-full sm:w-[180px]">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
@@ -127,32 +116,8 @@ export default function ProductsPage() {
 
       {/* Products Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {filteredProducts.map((product) => (
-          <Link key={product.id} href={`/products/${product.id}`}>
-            <Card className="overflow-hidden">
-              <div
-                className="aspect-video w-full bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: `url(${product.image})` }}
-              />
-              <div className="p-4">
-                <div className="mb-2 flex items-center gap-2">
-                  {getCategoryIcon(product.category)}
-                  <span className="text-sm text-muted-foreground">
-                    {product.category}
-                  </span>
-                </div>
-                <h3 className="mb-2 font-semibold">{product.name}</h3>
-                <p className="mb-4 text-sm text-muted-foreground">
-                  {product.description}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold">
-                    ${product.price.toFixed(2)}
-                  </span>
-                </div>
-              </div>
-            </Card>
-          </Link>
+        {filteredProducts.map((product: any) => (
+          <ProductCard product={product} key={product?._id} />
         ))}
       </div>
     </div>
