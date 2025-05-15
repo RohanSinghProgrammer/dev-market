@@ -29,7 +29,7 @@ const ProductCard = ({ product }: any) => {
           <div className="mb-2 flex items-center gap-2">
             {getCategoryIcon(product.category)}
             <span className="text-sm text-muted-foreground">
-              {product.category}
+              Web APIs
             </span>
           </div>
           <h3 className="mb-2 font-semibold">{product.name}</h3>
@@ -38,7 +38,7 @@ const ProductCard = ({ product }: any) => {
           </p>
           <div className="flex items-center justify-between">
             <span className="text-lg font-bold">
-              ${product.price.toFixed(2)}
+              ₹{product.price.toFixed(2)}
             </span>
           </div>
         </div>

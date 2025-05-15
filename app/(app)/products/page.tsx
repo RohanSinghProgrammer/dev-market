@@ -1,19 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Search, Code2, Database, Bot, Terminal } from "lucide-react";
-import Link from "next/link";
+import { Search } from "lucide-react";
 import ProductCard from "@/components/product-card";
+import { getProducts } from "./actions/actions";
 
 interface Product {
   id: string;
@@ -76,8 +67,9 @@ const categories = [
 export default function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [products, setProducts] = useState<any>("");
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = products && products.filter((product: any) => {
     const matchesSearch = product.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
@@ -86,6 +78,18 @@ export default function ProductsPage() {
       product.category.toLowerCase().includes(selectedCategory);
     return matchesSearch && matchesCategory;
   });
+
+  useEffect(() => {
+    getProducts().then((res) => {
+      try {
+        res = JSON.parse(res);
+        console.log(res);
+        setProducts(res);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }, []);
 
   return (
     <div className="container mx-auto py-8">
@@ -100,23 +104,11 @@ export default function ProductsPage() {
             className="pl-9"
           />
         </div>
-        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder="Category" />
-          </SelectTrigger>
-          <SelectContent>
-            {categories.map((category) => (
-              <SelectItem key={category.value} value={category.value}>
-                {category.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
       </div>
 
       {/* Products Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {filteredProducts.map((product: any) => (
+        {filteredProducts && filteredProducts.map((product: any) => (
           <ProductCard product={product} key={product?._id} />
         ))}
       </div>
