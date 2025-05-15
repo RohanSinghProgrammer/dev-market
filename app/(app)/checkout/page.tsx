@@ -29,10 +29,11 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useCart } from '@/lib/store';
 
 const CheckoutPage = () => {
     const [loading, setLoading] = useState(false);
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('credit-card');
+    const { items } = useCart();
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -41,18 +42,7 @@ const CheckoutPage = () => {
         setTimeout(() => setLoading(false), 2000);
     };
 
-    const cartItems = [
-        {
-            name: 'Sentiment Analysis API',
-            price: 49.99,
-            description: 'Enterprise-grade sentiment analysis API with 99.9% uptime'
-        },
-        {
-            name: 'Image Recognition Model',
-            price: 79.99,
-            description: 'Pre-trained ML model for image classification'
-        }
-    ];
+    const cartItems = items;
 
     const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
     const tax = subtotal * 0.18; // 18% GST
@@ -129,7 +119,7 @@ const CheckoutPage = () => {
                                         disabled={loading}
                                         onClick={handleSubmit}
                                     >
-                                        {loading ? 'Processing...' : `Pay $${total.toFixed(2)}`}
+                                        {loading ? 'Processing...' : `Pay ₹${total.toFixed(2)}`}
                                     </Button>
                                 </CardFooter>
                             </Card>
@@ -146,9 +136,9 @@ const CheckoutPage = () => {
                                         <div key={index} className="space-y-2">
                                             <div className="flex justify-between">
                                                 <span className="font-medium dark:text-white">{item.name}</span>
-                                                <span>${item.price.toFixed(2)}</span>
+                                                <span>₹{item.price.toFixed(2)}</span>
                                             </div>
-                                            <p className="text-sm dark:text-muted-foreground">{item.description}</p>
+                                            <p className="text-sm dark:text-muted-foreground">{item?.description}</p>
                                             {index !== cartItems.length - 1 && <Separator className="my-4" />}
                                         </div>
                                     ))}
@@ -156,16 +146,16 @@ const CheckoutPage = () => {
                                     <div className="space-y-2 pt-4">
                                         <div className="flex justify-between">
                                             <span className="dark:text-white">Subtotal</span>
-                                            <span>${subtotal.toFixed(2)}</span>
+                                            <span>₹{subtotal.toFixed(2)}</span>
                                         </div>
                                         <div className="flex justify-between">
                                             <span className="dark:text-white">Tax</span>
-                                            <span>${tax.toFixed(2)}</span>
+                                            <span>₹{tax.toFixed(2)}</span>
                                         </div>
                                         <Separator className="my-2" />
                                         <div className="flex justify-between font-bold">
                                             <span className="dark:text-white">Total</span>
-                                            <span>${total.toFixed(2)}</span>
+                                            <span>₹{total.toFixed(2)}</span>
                                         </div>
                                     </div>
                                 </CardContent>

@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface CartItem {
+  description: ReactNode;
   id: string;
   name: string;
   price: number;
