@@ -1,177 +1,156 @@
 "use client";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { ExternalLink, FileText, Upload } from 'lucide-react';
-import { useDropzone } from 'react-dropzone';
-import React, { useState } from 'react'
-
-const ImageTypes = ['.jpg', '.png', '.jpeg', '.svg', '.gif'];
-const DocumentationTypes = ['.md'];
-const SourceCodeTypes = ['.zip'];
+import SubmitButton from "@/components/submit-btn";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { ExternalLink } from "lucide-react";
+import React from "react";
+import { handleAddProduct } from "./actions";
+import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
 
 const AddProduct = () => {
-    const [productImg, setProductImg] = useState<File | null>(null);
-    const [documentation, setDocumentation] = useState<File | null>(null);
-    const [sourceCode, setSourceCode] = useState<File | null>(null);
-
-    const ProductImageDropzone = () => {
-        const { getRootProps, getInputProps, isDragActive } = useDropzone({
-            onDrop: (acceptedFiles: File[]) => {
-                setProductImg(acceptedFiles[0]);
-            },
-            accept: {
-                'image/*': ImageTypes
-            },
-            maxFiles: 1
-        });
-
-        return (
-            <div
-                {...getRootProps()}
-                className={`border-2 border-dashed rounded-lg p-4 text-center ${isDragActive ? 'border-blue-500' : 'border-gray-300'}`}
-            >
-                <input {...getInputProps()} className='hidden' />
-                <Upload className="mx-auto h-8 w-8 mb-2" />
-                <p className="text-sm">
-                    {isDragActive
-                        ? 'Drop the file here ...'
-                        : 'Drag and drop or click to upload'}
-                </p>
+  const { toast } = useToast();
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const onSubmit = async (formData: FormData) => {
+    const { status, title, description } = await handleAddProduct(
+      formData,
+      user
+    );
+    toast({
+      title,
+      description,
+    });
+  };
+  return (
+    <div className="space-y-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Add New Product</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form action={onSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Product Name
+              </label>
+              <Input required placeholder="Enter product name" name="name" />
             </div>
-        );
-    };
 
-    const DocumentationDropzone = () => {
-        const { getRootProps, getInputProps, isDragActive } = useDropzone({
-            onDrop: (acceptedFiles: File[]) => {
-                setDocumentation(acceptedFiles[0]);
-            },
-            accept: {
-                'text/markdown': DocumentationTypes
-            },
-            maxFiles: 1
-        });
-
-        return (
-            <div
-                {...getRootProps()}
-                className={`border-2 border-dashed rounded-lg p-4 text-center ${isDragActive ? 'border-blue-500' : 'border-gray-300'}`}
-            >
-                <input {...getInputProps()} className='hidden' />
-                <FileText className="mx-auto h-8 w-8 mb-2" />
-                <p className="text-sm">
-                    {isDragActive
-                        ? 'Drop the file here ...'
-                        : 'Upload README.md file'}
-                </p>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Description
+              </label>
+              <Textarea
+                placeholder="Enter product description"
+                name="description"
+              />
             </div>
-        );
-    };
 
-    const SourceCodeDropzone = () => {
-        const { getRootProps, getInputProps, isDragActive } = useDropzone({
-            onDrop: (acceptedFiles: File[]) => {
-                setSourceCode(acceptedFiles[0]);
-            },
-            accept: {
-                'application/zip': SourceCodeTypes
-            },
-            maxFiles: 1
-        });
-
-        return (
-            <div
-                {...getRootProps()}
-                className={`border-2 border-dashed rounded-lg p-4 text-center ${isDragActive ? 'border-blue-500' : 'border-gray-300'}`}
-            >
-                <input {...getInputProps()} className='hidden' />
-                <Upload className="mx-auto h-8 w-8 mb-2" />
-                <p className="text-sm">
-                    {isDragActive
-                        ? 'Drop the file here ...'
-                        : 'Upload ZIP file'}
-                </p>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Product Image
+              </label>
+              <Input
+                required
+                type="file"
+                placeholder="Enter product Image"
+                name="image"
+                accept="image/*"
+              />
             </div>
-        );
-    };
 
-    return (
-        <div className="space-y-4">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Add New Product</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    {/* Previous form fields remain the same */}
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Product Name</label>
-                        <Input placeholder="Enter product name" />
-                    </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Price</label>
+              <Input
+                required
+                type="number"
+                placeholder="Enter price"
+                name="price"
+              />
+            </div>
 
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Description</label>
-                        <Textarea placeholder="Enter product description" />
-                    </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Tags</label>
+              <Input
+                required
+                placeholder="Enter tags (comma separated)"
+                name="tags"
+              />
+            </div>
 
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Key Features
+              </label>
+              <Textarea
+                placeholder="Enter key features (comma separated)"
+                name="features"
+              />
+            </div>
 
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Product Image</label>
-                        <ProductImageDropzone />
-                    </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Technical Requirements
+              </label>
+              <Textarea
+                placeholder="Enter technical requirements (comma separated)"
+                name="requirements"
+              />
+            </div>
 
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Price</label>
-                        <Input type="number" placeholder="Enter price" />
-                    </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Included Resources
+              </label>
+              <Textarea
+                placeholder="Enter included resources (comma separated)"
+                name="resources"
+              />
+            </div>
 
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Tags</label>
-                        <Input placeholder="Enter tags (comma separated)" />
-                    </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Documentation (README.md)
+              </label>
+              <Input
+                required
+                type="file"
+                name="documentation"
+                placeholder="Add Project Documentation"
+              />
+            </div>
 
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Key Features</label>
-                        <Textarea placeholder="Enter key features (comma separated)" />
-                    </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Source Code
+              </label>
+              <Input
+                required
+                type="file"
+                name="code"
+                placeholder="Add Project Documentation"
+              />
+            </div>
 
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Technical Requirements</label>
-                        <Textarea placeholder="Enter technical requirements (comma separated)" />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Included Resources</label>
-                        <Textarea placeholder="Enter included resources (comma separated)" />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Documentation (README.md)</label>
-                        <DocumentationDropzone />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Source Code</label>
-                        <SourceCodeDropzone />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Live Demo Link</label>
-                        <div className="flex space-x-2">
-                            <Input placeholder="Enter live demo URL" />
-                            <Button variant="outline">
-                                <ExternalLink className="h-4 w-4" />
-                            </Button>
-                        </div>
-                    </div>
-
-                    <Button className="w-full">Add Product</Button>
-                </CardContent>
-            </Card>
-        </div>
-    )
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Live Demo Link
+              </label>
+              <div className="flex space-x-2">
+                <Input placeholder="Enter live demo URL" name="link" />
+                <Button variant="outline">
+                  <ExternalLink className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+            <SubmitButton text="Add Product" loadingText="Adding Product..." />
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
 };
 
-export default AddProduct
+export default AddProduct;

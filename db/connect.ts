@@ -24,10 +24,14 @@ export const connectToDB = async (): Promise<mongoose.Connection> => {
 
   if (!cached.promise) {
     console.log("🚀 Connecting to MongoDB...");
-    cached.promise = mongoose.connect(MONGO_URI).then((mongoose) => {
-      console.log("✅ MongoDB connected successfully!");
-      return mongoose.connection;
-    });
+    cached.promise = mongoose
+      .connect(MONGO_URI, {
+        serverSelectionTimeoutMS: 20000,
+      })
+      .then((mongoose) => {
+        console.log("✅ MongoDB connected successfully!");
+        return mongoose.connection;
+      });
   }
 
   cached.conn = await cached.promise;
